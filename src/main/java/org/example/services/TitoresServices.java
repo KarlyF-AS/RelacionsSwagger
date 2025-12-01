@@ -1,8 +1,8 @@
-package services;
+package org.example.services;
 
-import config.HibernateConfig;
-import model.Titores;
-import model.Alumno;
+import org.example.config.OpenApiConfig;
+import org.example.model.Titores;
+import org.example.model.Alumno;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class TitoresServices {
 
     public void crearTitor(String nome, String apelidos) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Titores novoTitor = new Titores();
             novoTitor.setNome(nome);
@@ -24,7 +24,7 @@ public class TitoresServices {
     }
 
     public Titores lerTitor(int id) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             return session.get(Titores.class, id);
         } catch (Exception e) {
             System.out.println("Erro ao ler o Titores: " + e.getMessage());
@@ -33,7 +33,7 @@ public class TitoresServices {
     }
 
     public Titores lerTitorConAlumnos(int id) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Titores titor = session.get(Titores.class, id);
             if (titor != null) {
                 System.out.println("Titor encontrado: " + titor.getNome() + " " + titor.getApelidos());
@@ -54,7 +54,7 @@ public class TitoresServices {
     }
 
     public void actualizarTitor(int id, String novoNome, String novosApelidos) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Titores titor = session.get(Titores.class, id);
             if (titor != null) {
@@ -72,7 +72,7 @@ public class TitoresServices {
     }
 
     public void actualizarNomeTitor(int id, String novoNome) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Titores titor = session.get(Titores.class, id);
             if (titor != null) {
@@ -89,7 +89,7 @@ public class TitoresServices {
     }
 
     public void eliminarTitor(int id) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Titores titor = session.get(Titores.class, id);
             if (titor != null) {
@@ -105,7 +105,7 @@ public class TitoresServices {
     }
 
     public List<Titores> listarTitores() {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             List<Titores> titorList = session.createQuery("FROM Titores", Titores.class).list();
             return titorList;
         } catch (Exception e) {

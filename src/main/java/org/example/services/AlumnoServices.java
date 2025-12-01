@@ -1,8 +1,8 @@
-package services;
+package org.example.services;
 
-import config.HibernateConfig;
-import model.Alumno;
-import model.Titores;
+import org.example.config.OpenApiConfig;
+import org.example.model.Alumno;
+import org.example.model.Titores;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class AlumnoServices {
 
     public void crearAlumno(String nome, Titores titor) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Alumno novoAlumno = new Alumno();
             novoAlumno.setNome(nome);
@@ -24,7 +24,7 @@ public class AlumnoServices {
     }
 
     public Alumno leerAlumno(int id) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             return session.get(Alumno.class, id);
         } catch (Exception e) {
             System.out.println("Error al leer o Alumno: " + e.getMessage());
@@ -33,7 +33,7 @@ public class AlumnoServices {
     }
 
     public void actualizarAlumno(int id, String novoNome, Titores novoTitor) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Alumno alumno = session.get(Alumno.class, id);
             if (alumno != null) {
@@ -51,7 +51,7 @@ public class AlumnoServices {
     }
 
     public void actualizarNomeAlumno(int id, String novoNome) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Alumno alumno = session.get(Alumno.class, id);
             if (alumno != null) {
@@ -68,7 +68,7 @@ public class AlumnoServices {
     }
 
     public void eliminarAlumno(int id) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Alumno alumno = session.get(Alumno.class, id);
             if (alumno != null) {
@@ -84,7 +84,7 @@ public class AlumnoServices {
     }
 
     public List<Alumno> listarAlumnos() {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             List<Alumno> alumnoList = session.createQuery("FROM Alumno", Alumno.class).list();
             return alumnoList;
         } catch (Exception e) {
@@ -94,11 +94,9 @@ public class AlumnoServices {
     }
 
     public List<Alumno> listarAlumnosPorTitor(int titorId) {
-        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+        try (Session session = OpenApiConfig.getSessionFactory().openSession()) {
             List<Alumno> alumnoList = session.createQuery(
-                            "FROM Alumno a WHERE a.titor.id_titor = :titorId", Alumno.class)
-                    .setParameter("titorId", titorId)
-                    .list();
+                            "FROM Alumno a WHERE a.titor.id_titor = :titorId", Alumno.class).setParameter("titorId", titorId).list();
             return alumnoList;
         } catch (Exception e) {
             System.out.println("Erroe al listar Alumnos por Titores: " + e.getMessage());

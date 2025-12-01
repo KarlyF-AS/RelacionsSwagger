@@ -1,31 +1,32 @@
-import model.Titores;
-import services.AlumnoServices;
-import services.TitoresServices;
+import org.example.model.Titores;
+import org.example.services.AlumnoServices;
+import org.example.services.TitoresServices;
 
 public class Main {
     public static void main(String[] args) {
         TitoresServices titoresServices = new TitoresServices();
         AlumnoServices alumnoService = new AlumnoServices();
 
-        // 1. Crear titores
+
+        //Crear titores
         titoresServices.crearTitor("Maria", "García López");
         titoresServices.crearTitor("Carlos", "Pérez Silva");
 
         Titores titor1 = titoresServices.lerTitor(1);
         Titores titor2 = titoresServices.lerTitor(2);
 
+        //Crear alumons
         alumnoService.crearAlumno("Ana", titor1);
-        alumnoService.crearAlumno("Maria", titor1);
         alumnoService.crearAlumno("Luis", titor2);
 
         System.out.println("\n--- seleccionar un tutor y todos sus alumnos ---");
         titoresServices.lerTitorConAlumnos(1);
 
         //Modificar alumnos
-        alumnoService.actualizarNomeAlumno(1, "Juan");
+        alumnoService.actualizarNomeAlumno(1, "Juan Nuevo");
 
         // Modificar titores
-        titoresServices.actualizarTitor(1, "Josefa", "García López");
+        titoresServices.actualizarTitor(1, "Maria nuevo", "García");
 
         // Eliminar alumnos
         alumnoService.eliminarAlumno(2);
