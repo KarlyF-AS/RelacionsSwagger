@@ -1,6 +1,8 @@
 package org.example.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +30,7 @@ public class Titores {
     public Titores(String nome, String apelidos) {
         this.nome = nome;
         this.apelidos = apelidos;
+        this.alumnos = new ArrayList<>();
     }
     //constructor vacio
     public Titores(){}

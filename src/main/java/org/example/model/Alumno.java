@@ -1,6 +1,6 @@
 package org.example.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "alumno")
@@ -9,19 +9,27 @@ public class Alumno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id_alumno;
-    @Column(name = "nome")
+
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
+
+    @Column(name = "apelidos", nullable = false, length = 150)
+    private String apelidos;
+
     @ManyToOne
-    @JoinColumn(name = "id_titor")
+    @JoinColumn(name = "id_titor", nullable = false)
     private Titores titor;
 
-    public Alumno(String nome, Titores titor) {
-        this.id_alumno = id_alumno;
+
+    public Alumno(String nome, String apelidos, Titores titor) {
         this.nome = nome;
+        this.apelidos = apelidos;
         this.titor = titor;
     }
+
     public Alumno(){}
 
+    // Getters y setters
     public int getId_alumno() {
         return id_alumno;
     }
@@ -38,12 +46,19 @@ public class Alumno {
         this.nome = nome;
     }
 
-    public Titores getTitores() {
+    public String getApelidos() {
+        return apelidos;
+    }
+
+    public void setApelidos(String apelidos) {
+        this.apelidos = apelidos;
+    }
+
+    public Titores getTitor() {
         return titor;
     }
 
-    public void setTitores(Titores titor) {
+    public void setTitor(Titores titor) {
         this.titor = titor;
     }
 }
-
